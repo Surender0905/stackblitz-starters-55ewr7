@@ -8,13 +8,26 @@ const app = express();
 const port = 3010;
 let db;
 
-// Initialize the database connection
-(async () => {
+// Function to initialize the database
+const initializeDatabase = async () => {
+  const dbPath = path.join(process.cwd(), 'database.sqlite'); // Ensure it's in the right directory
+
+  // Create database file if it doesn't exist
+  if (!fs.existsSync(dbPath)) {
+    fs.writeFileSync(dbPath, '');
+  }
+
   db = await open({
-    filename: './database.sqlite',
+    filename: dbPath,
     driver: sqlite3.Database,
   });
-})();
+};
+
+// Middleware to initialize the database on every request
+app.use(async (req, res, next) => {
+  await initializeDatabase();
+  next();
+});
 
 app.use(express.static('static'));
 
