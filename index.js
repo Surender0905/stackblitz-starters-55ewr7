@@ -198,7 +198,7 @@ app.get('/dishes/filter', async (req, res) => {
   const { isVeg } = req.query;
 
 
-  const filterVeg = isVeg === 'true'; 
+  const filterVeg = isVeg; 
 
   try {
     const dishes = await fetchDishesByFilter(filterVeg);
