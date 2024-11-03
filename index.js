@@ -192,7 +192,7 @@ app.get('/dishes/details/:id', async (req, res) => {
 async function fetchDishesByFilter(isVeg) {
   const sql = 'SELECT * FROM dishes WHERE isVeg = ?';
   return db.all(sql, [isVeg]); 
-
+}
 
 app.get('/dishes/filter', async (req, res) => {
   const { isVeg } = req.query;
@@ -222,7 +222,7 @@ async function fetchDishesSortedByPrice() {
 }
 
 
-app.get('/dishes/sort-by-price', async (_req, res) => {
+app.get('/dishes/sort-by-price', async (req, res) => {
   try {
     const dishes = await fetchDishesSortedByPrice();
 
@@ -236,6 +236,4 @@ app.get('/dishes/sort-by-price', async (_req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+app.listen(port, ()=>console.log(`Example app listening at http://localhost:${port}`));
