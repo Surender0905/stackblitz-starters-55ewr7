@@ -222,7 +222,7 @@ async function fetchDishesSortedByPrice() {
 }
 
 
-app.get('/dishes/sort-by-price', async (req, res) => {
+app.get('/dishes/sort-by-price', async (_req, res) => {
   try {
     const dishes = await fetchDishesSortedByPrice();
 
