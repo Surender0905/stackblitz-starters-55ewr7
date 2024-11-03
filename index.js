@@ -3,6 +3,7 @@ const { resolve } = require('path');
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const { open } = require('sqlite');
+const path = require('path');
 const app = express();
 const port = 3010;
 
@@ -10,10 +11,15 @@ app.use(cors());
 app.use(express.json());
 let db;
 (async () => {
-  db = await open({
-    filename: './database.sqlite',
-    driver: sqlite3.Database,
-  });
+  try {
+    db = await open({
+      filename: path.join(__dirname, 'database.sqlite'), // Make sure this path is writable
+      driver: sqlite3.Database,
+    });
+    console.log('Database connection established.');
+  } catch (error) {
+    console.error('Database connection failed:', error.message);
+  }
 })();
 app.use(express.static('static'));
 
